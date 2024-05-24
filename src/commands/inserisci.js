@@ -76,7 +76,7 @@ const execute = async (interaction) => {
 		tokenEmoji.positive
 	}${negative}${tokenEmoji.negative}${random}${tokenEmoji.random})
 
-Estratto ${extracted} Token: ${tokenEmoji.positive.repeat(
+Ha estratto ${extracted} Token: ${tokenEmoji.positive.repeat(
 		extractedPositive,
 	)}${tokenEmoji.negative.repeat(extractedNegative)}`
 
