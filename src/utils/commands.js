@@ -1,15 +1,11 @@
-const inserisci = require("../commands/inserisci")
 const { Collection } = require("discord.js")
+const ping = require("../commands/ping")
 
-const commands = [{ name: "inserisci", command: inserisci }]
+const commands = [ping]
 
 function getCommandsCollection() {
 	const collection = new Collection()
-
-	for (const cmd in commands) {
-		collection.set(cmd.name, cmd.command)
-	}
-
+	commands.forEach((command) => collection.set(command.data.name, command))
 	return collection
 }
 

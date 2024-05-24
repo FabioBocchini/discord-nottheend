@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require("discord.js")
 
 const data = new SlashCommandBuilder()
-	.setName("inserisci")
-	.setDescription("Inserisci Token nel Sacchetto")
+	.setName("ping")
+	.setDescription("Replies with Pong!")
 
 const execute = async (interaction) => {
 	// const user = interaction.user.username
