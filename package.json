@@ -1,0 +1,20 @@
+{
+  "name": "not-the-end",
+  "version": "1.0.0",
+  "description": "discord bot to play NotTheEnd",
+  "main": "src/index.js",
+  "author": "fabiobocchini",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "14.15.2",
+    "dotenv": "16.4.5"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "deploy-commands": "node src/scripts/deployCommand.js",
+    "format": "yarn biome check --apply ./src"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.7.3"
+  }
+}
