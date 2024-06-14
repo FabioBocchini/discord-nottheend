@@ -39,7 +39,7 @@ const data = new SlashCommandBuilder()
 			.setDescription("Numero di Token da Estrarre")
 			.setRequired(true)
 			.setMinValue(1)
-			.setMaxValue(4),
+			.setMaxValue(5),
 	)
 
 const execute = async (interaction) => {
@@ -93,10 +93,15 @@ Ha estratto ${extracted} Token: ${tokenEmoji.positive.repeat(
 		.setCustomId("risk")
 		.setLabel("Rischia")
 		.setStyle(ButtonStyle.Danger)
+	const dareButton= new ButtonBuilder()
+		.setCustomId("dare")
+		.setLabel("Osa")
+		.setStyle(ButtonStyle.Danger)
 
 	const actionRow = new ActionRowBuilder().addComponents(
 		continueButton,
 		riskButton,
+		dareButton,
 	)
 
 	const response = await interaction.reply({
@@ -111,13 +116,16 @@ Ha estratto ${extracted} Token: ${tokenEmoji.positive.repeat(
 			time: 60_000,
 		})
 
-		if (confirmation.customId === "risk") {
+		if (confirmation.customId === "risk" || "dare") {
+
+			const riskNumber = confirmation.customId === "risk" ? 5 : 6
+
 			const {
 				extractedPositive: riskExtractedPositive,
 				extractedNegative: riskExtractedNegative,
 			} = extract(
 				currentInBag,
-				5 - extracted,
+				riskNumber - extracted,
 				actualPosisitive - extractedPositive,
 				actualNegative - extractedNegative,
 			)
