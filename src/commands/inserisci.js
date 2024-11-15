@@ -44,10 +44,10 @@ const data = new SlashCommandBuilder()
 
 const execute = async (interaction) => {
 	const user = interaction.user.username
-	const positive = interaction.options.getInteger("positivi")
-	const negative = interaction.options.getInteger("negativi")
+	const positive = interaction.options.getInteger("positivi") ?? 0
+	const negative = interaction.options.getInteger("negativi") ?? 0
 	const random = interaction.options.getInteger("random") ?? 0
-	const extracted = interaction.options.getInteger("estrai")
+	const extracted = interaction.options.getInteger("estrai") ?? 1
 
 	let randomPositive = 0
 	for (let i = 0; i <= random; i++) {
@@ -55,8 +55,7 @@ const execute = async (interaction) => {
 	}
 
 	const actualPosisitive = positive + randomPositive
-	const actualNegative = negative + random - randomPositive
-	const total = actualPosisitive + actualNegative
+	const total = positive + negative + random
 
 	if (extracted > total) {
 		await interaction.reply({
@@ -69,7 +68,6 @@ const execute = async (interaction) => {
 		total,
 		extracted,
 		actualPosisitive,
-		actualNegative,
 	)
 
 	const responseContent = `${user} ha inserito ${total} Token (${positive}${
@@ -93,7 +91,7 @@ Ha estratto ${extracted} Token: ${tokenEmoji.positive.repeat(
 		.setCustomId("risk")
 		.setLabel("Rischia")
 		.setStyle(ButtonStyle.Danger)
-	const dareButton= new ButtonBuilder()
+	const dareButton = new ButtonBuilder()
 		.setCustomId("dare")
 		.setLabel("Osa")
 		.setStyle(ButtonStyle.Danger)
@@ -116,8 +114,7 @@ Ha estratto ${extracted} Token: ${tokenEmoji.positive.repeat(
 			time: 60_000,
 		})
 
-		if (confirmation.customId === "risk" || "dare") {
-
+		if (["risk", "dare"].includes(confirmation.customId)) {
 			const riskNumber = confirmation.customId === "risk" ? 5 : 6
 
 			const {
@@ -127,15 +124,12 @@ Ha estratto ${extracted} Token: ${tokenEmoji.positive.repeat(
 				currentInBag,
 				riskNumber - extracted,
 				actualPosisitive - extractedPositive,
-				actualNegative - extractedNegative,
 			)
 
 			await confirmation.update({
-				content:
-					responseContent +
-					` + Rischio ${tokenEmoji.positive.repeat(
-						riskExtractedPositive,
-					)}${tokenEmoji.negative.repeat(riskExtractedNegative)}`,
+				content: `${responseContent} + Rischio ${tokenEmoji.positive.repeat(
+					riskExtractedPositive,
+				)}${tokenEmoji.negative.repeat(riskExtractedNegative)}`,
 				components: [],
 			})
 		} else if (confirmation.customId === "cancel") {

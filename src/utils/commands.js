@@ -5,7 +5,9 @@ const commands = [inserisci]
 
 function getCommandsCollection() {
 	const collection = new Collection()
-	commands.forEach((c) => collection.set(c.data.name, c))
+	for (const c of commands) {
+		collection.set(c.data.name, c)
+	}
 	return collection
 }
 
