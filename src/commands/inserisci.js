@@ -122,7 +122,7 @@ Ha estratto ${extracted} Token: ${tokenEmoji.positive.repeat(
 				extractedNegative: riskExtractedNegative,
 			} = extract(
 				currentInBag,
-				Math.max(riskNumber, total) - extracted,
+				Math.min(riskNumber, total) - extracted,
 				actualPositive - extractedPositive,
 			)
 
