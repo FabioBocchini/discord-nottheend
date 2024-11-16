@@ -50,11 +50,11 @@ const execute = async (interaction) => {
 	const extracted = interaction.options.getInteger("estrai") ?? 1
 
 	let randomPositive = 0
-	for (let i = 0; i <= random; i++) {
+	for (let i = 0; i < random; i++) {
 		if (Math.random() < 0.5) randomPositive++
 	}
 
-	const actualPosisitive = positive + randomPositive
+	const actualPositive = positive + randomPositive
 	const total = positive + negative + random
 
 	if (extracted > total) {
@@ -67,7 +67,7 @@ const execute = async (interaction) => {
 	const { currentInBag, extractedPositive, extractedNegative } = extract(
 		total,
 		extracted,
-		actualPosisitive,
+		actualPositive,
 	)
 
 	const responseContent = `${user} ha inserito ${total} Token (${positive}${
@@ -123,7 +123,7 @@ Ha estratto ${extracted} Token: ${tokenEmoji.positive.repeat(
 			} = extract(
 				currentInBag,
 				Math.max(riskNumber, total) - extracted,
-				actualPosisitive - extractedPositive,
+				actualPositive - extractedPositive,
 			)
 
 			await confirmation.update({
@@ -150,7 +150,7 @@ function extract(inBag, extractNumber, positive) {
 	let currentPositive = positive
 
 	for (let i = 0; i < extractNumber; i++) {
-		if (Math.random() * currentInBag <= currentPositive) {
+		if (Math.random() * currentInBag < currentPositive) {
 			extractedPositive++
 			currentPositive--
 		}
